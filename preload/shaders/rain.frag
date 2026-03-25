@@ -107,24 +107,6 @@ float snoise(vec3 v) {
 									dot(p2,x2), dot(p3,x3) ) );
 }
 
-
-
-
-
-
-
-
-
-
-struct Light {
-	vec2 position;
-	vec3 color;
-	float radius;
-};
-
-// prevent auto field generation
-#define UNIFORM uniform
-
 uniform float uScale;
 uniform float uIntensity;
 uniform float uTime;
@@ -140,7 +122,9 @@ uniform bool uSpriteMode;
 uniform vec3 uRainColor;
 
 const int MAX_LIGHTS = 8;
-UNIFORM Light lights[MAX_LIGHTS];
+uniform vec2 lightPositions[MAX_LIGHTS];
+uniform vec3 lightColors[MAX_LIGHTS];
+uniform float lightRadiuses[MAX_LIGHTS];
 
 float rand(vec2 a) {
 	return fract(sin(dot(mod(a, vec2(1000.0)).xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -217,9 +201,9 @@ vec3 lightUp(vec2 p) {
 		if (i >= numLights) {
 			break;
 		}
-		vec2 lp = lights[i].position;
-		vec3 lc = lights[i].color;
-		float lr = lights[i].radius;
+		vec2 lp = lightPositions[i];
+		vec3 lc = lightColors[i];
+		float lr = lightRadiuses[i];
 		float w = max(0.0, 1.0 - length(lp - p) / lr);
 		res += ease(w) * lc;
 	}

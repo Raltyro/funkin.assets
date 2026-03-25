@@ -1,7 +1,7 @@
 #pragma header
 
-uniform sampler2D sourceSwag;
-uniform sampler2D backgroundSwag;
+uniform sampler2D source;
+uniform sampler2D background;
 uniform int blendMode;
 
 // The functions below are needed for the following blend modes:
@@ -274,8 +274,8 @@ vec3 blend(vec3 bg, vec3 src)
 
 void main()
 {
-  vec4 bg = flixel_texture2D(backgroundSwag, openfl_TextureCoordv);
-  vec4 src = flixel_texture2D(sourceSwag, screenCoord);
+  vec4 bg = flixel_texture2D(background, openfl_TextureCoordv);
+  vec4 src = flixel_texture2D(source, screenCoord);
 
   // Un-premultiply the alpha before blending
   src.rgb = src.a > 0.0 ? src.rgb / src.a : src.rgb;
